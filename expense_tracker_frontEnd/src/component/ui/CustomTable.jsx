@@ -3,8 +3,8 @@ import "./common.css"
 const CustomTable=({dataSource,columns,scroll,onRow,rowSelection})=>{
     
   return(
-    <div className="custom-table">
-    <Table rowSelection={rowSelection}  scroll={scroll} pagination={false} dataSource={dataSource} columns={columns} onRow={onRow} />
+    <div className="custom-table ">
+    <Table  rowSelection={rowSelection}  scroll={scroll} pagination={false} dataSource={dataSource} columns={columns} onRow={onRow} />
     </div>
   )
 }

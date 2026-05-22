@@ -3,9 +3,10 @@ import CustomButton from "../../ui/CustomButton";
 import CustomInput from "../../ui/CustomInput";
 import CustomText from "../../ui/CustomText";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Login=()=>{
+    const navigate=useNavigate()
     const [loginInput,setloginInput]=useState({
         email:"",
         password:""
@@ -25,7 +26,9 @@ const Login=()=>{
         
         try {
             const res=await axios.post("http://localhost:3000/users/login",data);
-            console.log(res);
+            if(res.status==200){
+                navigate("/expense")
+            }
                         
             
         } catch (error) {
