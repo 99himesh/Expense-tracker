@@ -1,0 +1,16 @@
+.custom-table .ant-table-thead  th  {  background:#214344!important; }
+.custom-table table{  border: 1px solid #E6E7E9; border-radius: 10px; }
+.ant-modal-content{background-color: #EFE6DC!important;}
+
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.no-spinner {
+  -moz-appearance: textfield;
+}
+
+
+
+
