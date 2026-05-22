@@ -3,6 +3,7 @@ import CustomButton from "../../ui/CustomButton";
 import CustomInput from "../../ui/CustomInput";
 import CustomText from "../../ui/CustomText";
 import { useState } from "react";
+import { Link } from "react-router";
 
 const SignUp=()=>{
     const [singUpInput,setSignUpInput]=useState({
@@ -48,6 +49,9 @@ const SignUp=()=>{
                </div>
                <div className="flex justify-center pt-3">
                 <CustomButton onclick={()=>{signUpHandler()}} value={"Sign Up"}/>
+               </div>
+                <div className="text-[#fff] flex justify-center">
+               <Link to={"/login"}>have you already Account? Login</Link>
                </div>
          </div>
          </div>
