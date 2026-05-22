@@ -13,16 +13,20 @@ const Login=()=>{
 
     const loginInputUpHandler=(e)=>{
         const {name,value}=e.target;
+        console.log(name,value);
+        
         setloginInput({...loginInput,[name]:value});
 
     }
 
     const loginHandler=async()=>{
-        const data={...loginInput}
+        const data={...loginInput};
+        console.log(data,"dfsd");
+        
         try {
-            // const res=await axios.post("http://localhost:3000/users/signUp",data);
+            const res=await axios.post("http://localhost:3000/users/login",data);
             console.log(res);
-            
+                        
             
         } catch (error) {
             console.log(error.message);
@@ -36,11 +40,11 @@ const Login=()=>{
                 <CustomText className={"!text-[30px] text-center"} value={"Login"}/>
                <div className="flex flex-col gap-2">
                 <CustomText value={"Email"}/>
-                <CustomInput name="email" value={loginInput?.email} onchange={(e)=>{setloginInput(e)}} className={"!w-[300px]"} />
+                <CustomInput name="email" value={loginInput?.email} onchange={(e)=>{loginInputUpHandler(e)}} className={"!w-[300px]"} />
                </div>
                <div className="flex flex-col gap-2">
                 <CustomText value={"Password"}/>
-                <CustomInput name="password" value={loginInput?.password} onchange={(e)=>{setloginInput(e)}} className={"!w-[300px]"} />
+                <CustomInput name="password" value={loginInput?.password} onchange={(e)=>{loginInputUpHandler(e)}} className={"!w-[300px]"} />
                </div>
                <div className="flex justify-center pt-3">
                  <CustomButton onclick={()=>{loginHandler()}} value={"Log in"}/>
