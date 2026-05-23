@@ -4,17 +4,17 @@ import CustomInput from "../../ui/CustomInput";
 import CustomText from "../../ui/CustomText";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-
+import Cookies from "js-cookie"
 const Login=()=>{
     const navigate=useNavigate()
     const [loginInput,setloginInput]=useState({
         email:"",
         password:""
     })
+    
 
     const loginInputUpHandler=(e)=>{
         const {name,value}=e.target;
-        console.log(name,value);
         
         setloginInput({...loginInput,[name]:value});
 
@@ -22,15 +22,15 @@ const Login=()=>{
 
     const loginHandler=async()=>{
         const data={...loginInput};
-        console.log(data,"dfsd");
+       
         
         try {
             const res=await axios.post("http://localhost:3000/users/login",data);
             if(res.status==200){
+                console.log(res.data.token);
+                Cookies.set("token",res.data.token)
                 navigate("/expense")
             }
-                        
-            
         } catch (error) {
             console.log(error.message);
             

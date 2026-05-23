@@ -6,10 +6,9 @@ import axios from "axios"
 import CustomSelect from "../../ui/CustomSelect"
 import CustomTable from "../../ui/CustomTable"
 import { Typography } from "antd"
-
+import Cookies from "js-cookie"
 const Expense=()=>{
-
-
+    const token=Cookies.get("token");
     const [expenseInput,setExpenseInput]=useState({
         expenseAmount:null,
         description:"",
@@ -23,7 +22,11 @@ const Expense=()=>{
     }
      const getExpense=async()=>{
             try {
-                const res=await axios.get("http://localhost:3000/expense/getExpense");
+                const res=await axios.get("http://localhost:3000/expense/getExpense",{
+                headers:{
+                    "Authorization":token
+                }
+                })
                 setExpense(res.data.expenses);
                 
                 
@@ -35,8 +38,12 @@ const Expense=()=>{
     const addExpenseHandler=async()=>{
         const data={...expenseInput}
              try {
-                 const res=await axios.post("http://localhost:3000/expense/addExpense",data)
-                 console.log(res);
+                 const res=await axios.post("http://localhost:3000/expense/addExpense",data,{
+                    headers:{
+                        "Authorization":token
+                    }
+                 })
+                
                  
                  if(res.status==201){
                     getExpense();
