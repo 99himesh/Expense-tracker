@@ -7,6 +7,9 @@ import CustomSelect from "../../ui/CustomSelect"
 import CustomTable from "../../ui/CustomTable"
 import { Typography } from "antd"
 import Cookies from "js-cookie"
+import {
+    DeleteOutlined
+} from '@ant-design/icons';
 const Expense=()=>{
     const token=Cookies.get("token");
     const [expenseInput,setExpenseInput]=useState({
@@ -58,7 +61,25 @@ const Expense=()=>{
                     
                 }   
          }
-
+         const expenseDeleteHandler=async(item)=>{
+            const data={...expenseInput}
+             try {
+                 const res=await axios.delete(`http://localhost:3000/expense/deleteExpense/${item?.id}`,{
+                    headers:{
+                        "Authorization":token
+                    }
+                 })
+                
+                 
+                 if(res.status==201){
+                    getExpense();
+                  }
+                } catch (error) {
+                 console.log(error);
+                    
+                }
+              
+         }
         
          useEffect(()=>{
             getExpense();
@@ -91,6 +112,17 @@ const Expense=()=>{
                 dataIndex: 'description',
                 key: 'description',
                 render:(_,text)=><Typography.Text>{text.description}</Typography.Text>
+            },
+            {
+                title: <CustomText value={"Action"}/>,
+                dataIndex: 'description',
+                key: 'description',
+                align:"center",
+                render:(_,text)=>{
+                    return    <div className="cursor-pointer" onClick={()=>{expenseDeleteHandler(text)}} >
+                            <DeleteOutlined style={{fontSize:"20px"}}/>
+                        </div>
+                }
             },
           
             ];
