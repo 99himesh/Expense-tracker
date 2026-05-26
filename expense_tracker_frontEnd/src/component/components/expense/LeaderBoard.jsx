@@ -91,15 +91,15 @@ const LeaderBoard=()=>{
         },
          {
             title: <CustomText value={"Name"} />,
-            dataIndex: 'user',
-            key: 'user',
-            render: (_, text, idx) => <Typography.Text>{text?.user.name}</Typography.Text>
+            dataIndex: 'name',
+            key: 'name',
+            render: (_, text, idx) => <Typography.Text>{text?.name}</Typography.Text>
         },
         {
             title: <CustomText value={"Total Expense"} />,
-            dataIndex: 'total',
-            key: 'total',
-            render: (_, text) => <Typography.Text>Rs. {text?.total}</Typography.Text>
+            dataIndex: 'total_cost',
+            key: 'total_cost',
+            render: (_, text) => <Typography.Text>Rs. {text?.total_cost}</Typography.Text>
         },
         
        
