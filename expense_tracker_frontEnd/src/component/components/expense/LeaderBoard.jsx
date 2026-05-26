@@ -7,8 +7,12 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { useState } from "react";
 import CustomTable from "../../ui/CustomTable";
+import { Typography } from "antd";
 const LeaderBoard=()=>{
-    const {leaderBoardStatus,setLeaderBoardStatus}=useState(false)
+    const [leaderBoardStatus,setLeaderBoardStatus]=useState(false);
+    const [leaderBoard,setLeaderBoard]=useState([])
+    console.log(leaderBoardStatus);
+    
     const navigate=useNavigate();
     const token=Cookies.get("token");
         let cashfree;
@@ -18,7 +22,6 @@ const LeaderBoard=()=>{
          });
        }
     initializeSDK();
-
     const doPayment = async () => {
      try {
             const res=await axios.post("http://localhost:3000/payment/pay",{},{
@@ -47,6 +50,7 @@ const LeaderBoard=()=>{
                 }
              });
              if(res.data.payments==="Success"){
+                
              setLeaderBoardStatus(true)
                
              }
@@ -57,41 +61,56 @@ const LeaderBoard=()=>{
             
           }
        }
-   useEffect(()=>{
-    cheackLeaderBoardStatus()
-   },[])
-     const expenseColumn = [
+       const getLeaderBoard=async()=>{
+          try {
+             const res=await axios.get("http://localhost:3000/leaderBoard/getLeaderBoard",{
+                headers:{
+                    "authorization":token
+                }
+             });
+            console.log(res?.data?.leaderBoard,"dsfsdhghj");
+            setLeaderBoard(res?.data?.leaderBoard)
+          
+            
+          } catch (error) {
+            console.log(error);
+            
+          }
+       }
+        useEffect(()=>{
+            cheackLeaderBoardStatus();
+            getLeaderBoard()
+        },[])
+     const leaderBoardColumn = [
         {
             title: <CustomText value={"Id"} />,
             dataIndex: 'expenseAmount',
             key: 'expenseAmount',
-            width: 100,
+            width: 70,
             render: (_, text, idx) => <Typography.Text>{idx + 1}</Typography.Text>
         },
-        {
-            title: <CustomText value={"Expense Amount"} />,
-            dataIndex: 'expenseAmount',
-            key: 'expenseAmount',
-            render: (_, text) => <Typography.Text>Rs. {text.expenseAmount}</Typography.Text>
+         {
+            title: <CustomText value={"Name"} />,
+            dataIndex: 'user',
+            key: 'user',
+            render: (_, text, idx) => <Typography.Text>{text?.user.name}</Typography.Text>
         },
         {
-            title: <CustomText value={"Category"} />,
-            dataIndex: 'category',
-            key: 'category',
-            render: (_, text) => <Typography.Text>{text.category}</Typography.Text>
+            title: <CustomText value={"Total Expense"} />,
+            dataIndex: 'total',
+            key: 'total',
+            render: (_, text) => <Typography.Text>Rs. {text?.total}</Typography.Text>
         },
-        {
-            title: <CustomText value={"Description"} />,
-            dataIndex: 'description',
-            key: 'description',
-            render: (_, text) => <Typography.Text>{text.description}</Typography.Text>
-        },
+        
        
 
     ];
+
+    console.log(leaderBoard);
+    
     return(
         <div className="">
-        {leaderBoardStatus? 
+        {!leaderBoardStatus? 
        ( <div>
         <div className="flex justify-center  gap-4">
                 <CustomText className={"!text-[30px] text-center"} value={"Premium Membership"}/>
@@ -103,10 +122,10 @@ const LeaderBoard=()=>{
         :(
             <div>
                 <div className="flex justify-center  gap-4">
-                <CustomText className={"!text-[30px] text-center"} value={"LeaderBoard"}/>
+                <CustomText className={"!text-[30px] text-center"} value={"You are a premium user"}/>
                 </div>
                 <div className="flex justify-center items-center pt-5">
-                    <CustomTable scroll={{ y: 400 }} dataSource={[1,2,3]} />
+                    <CustomTable scroll={{ y:400 }} columns={leaderBoardColumn} dataSource={leaderBoard} />
                 
                 </div>
              </div>
