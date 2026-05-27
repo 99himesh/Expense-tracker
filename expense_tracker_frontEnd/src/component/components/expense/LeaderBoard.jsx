@@ -79,7 +79,9 @@ const LeaderBoard=()=>{
        }
         useEffect(()=>{
             cheackLeaderBoardStatus();
-            getLeaderBoard()
+
+            getLeaderBoard();
+
         },[])
      const leaderBoardColumn = [
         {
@@ -97,9 +99,9 @@ const LeaderBoard=()=>{
         },
         {
             title: <CustomText value={"Total Expense"} />,
-            dataIndex: 'total_cost',
-            key: 'total_cost',
-            render: (_, text) => <Typography.Text>Rs. {text?.total_cost}</Typography.Text>
+            dataIndex: 'totalExpense',
+            key: 'totalExpense',
+            render: (_, text) => <Typography.Text>Rs. {text?.totalExpense}</Typography.Text>
         },
         
        
