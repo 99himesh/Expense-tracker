@@ -14,6 +14,8 @@ const YourExpense = ({expense,setExpense,totalExpense,setTotalExpense}) => {
     
     const token = Cookies.get("token");
     const [page,setPage]=useState(1);
+    const [pageSize,setPageSize]=useState(5);
+
     const expenseColumn = [
         {
             title: <CustomText value={"Id"} />,
@@ -61,7 +63,8 @@ const YourExpense = ({expense,setExpense,totalExpense,setTotalExpense}) => {
                     "Authorization": token
                 },
                 params:{
-                    page:page
+                    page:page,
+                    limit:pageSize
                 }
             })
             setExpense(res?.data?.expenses);
@@ -97,7 +100,7 @@ const YourExpense = ({expense,setExpense,totalExpense,setTotalExpense}) => {
   
     useEffect(() => {
         getExpense();
-    }, [page])
+    }, [page,pageSize])
     return (
         <>
             <div className="flex flex-col gap-3  mx-auto pt-5 bg-[#1F6F5F] rounded-t-2xl mt-5 ">
@@ -113,7 +116,7 @@ const YourExpense = ({expense,setExpense,totalExpense,setTotalExpense}) => {
                   />
                 </div>
                 <CustomTable scroll={{ y: 400 }} columns={expenseColumn} dataSource={expense} />
-                <CustomPagination onchange={(e)=>{setPage(e)}} total={totalExpense} defaultCurrent={page} />
+                <CustomPagination pageSize={pageSize} setPageSize={setPageSize} onchange={(e)=>{setPage(e)}} total={totalExpense} defaultCurrent={page} />
             </div>
         </>
     )
