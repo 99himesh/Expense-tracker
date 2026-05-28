@@ -9,10 +9,11 @@ import {
 } from '@ant-design/icons';
 import { useEffect } from "react";
 import CustomSelect from "../../ui/CustomSelect";
-const YourExpense = () => {
+import CustomPagination from "../../ui/CustomPagination";
+const YourExpense = ({expense,setExpense,totalExpense,setTotalExpense}) => {
+    
     const token = Cookies.get("token");
-    const [expense, setExpense] = useState([])
-
+    const [page,setPage]=useState(1);
     const expenseColumn = [
         {
             title: <CustomText value={"Id"} />,
@@ -58,9 +59,13 @@ const YourExpense = () => {
             const res = await axios.get("http://localhost:3000/expense/getExpense", {
                 headers: {
                     "Authorization": token
+                },
+                params:{
+                    page:page
                 }
             })
             setExpense(res?.data?.expenses);
+            setTotalExpense(res?.data?.totalCount);
 
 
         } catch (error) {
@@ -88,10 +93,11 @@ const YourExpense = () => {
         }
 
     }
-
+  console.log(totalExpense);
+  
     useEffect(() => {
         getExpense();
-    }, [])
+    }, [page])
     return (
         <>
             <div className="flex flex-col gap-3  mx-auto pt-5 bg-[#1F6F5F] rounded-t-2xl mt-5 ">
@@ -107,6 +113,7 @@ const YourExpense = () => {
                   />
                 </div>
                 <CustomTable scroll={{ y: 400 }} columns={expenseColumn} dataSource={expense} />
+                <CustomPagination onchange={(e)=>{setPage(e)}} total={totalExpense} defaultCurrent={page} />
             </div>
         </>
     )

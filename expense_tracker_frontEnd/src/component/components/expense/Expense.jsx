@@ -19,6 +19,8 @@ const Expense = () => {
         description: "",
         category: ""
     });
+    const [expense, setExpense] = useState([]);
+    const [totalExpense,setTotalExpense]=useState(null)
 
     const expenseInputHandler = (e) => {
         const { name, value } = e.target;
@@ -30,7 +32,10 @@ const Expense = () => {
                 headers: {
                     "Authorization": token
                 }
-            })
+            });
+            setExpense(res?.data?.expenses);
+            setTotalExpense(res?.data?.totalCount);
+            
 
 
         } catch (error) {
@@ -107,7 +112,7 @@ const Expense = () => {
                         <LeaderBoard />
                     </Col>
                 </Row>
-                 <YourExpense/>
+                 <YourExpense setExpense={setExpense} expense={expense} totalExpense={totalExpense} setTotalExpense={setTotalExpense}/>
             </div>
         </div>
 
