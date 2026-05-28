@@ -18,7 +18,6 @@ const PaymentStatus=()=>{
                     "authorization":token
                 }
             })
-       console.log(res,"dgdfgdfgdgfddg");
        setOrderStatus(res?.data?.orderStatus)
        
         } catch (error) {

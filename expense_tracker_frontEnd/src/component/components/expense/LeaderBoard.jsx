@@ -11,7 +11,6 @@ import { Typography } from "antd";
 const LeaderBoard=()=>{
     const [leaderBoardStatus,setLeaderBoardStatus]=useState(false);
     const [leaderBoard,setLeaderBoard]=useState([])
-    console.log(leaderBoardStatus);
     
     const navigate=useNavigate();
     const token=Cookies.get("token");
@@ -68,7 +67,6 @@ const LeaderBoard=()=>{
                     "authorization":token
                 }
              });
-            console.log(res?.data?.leaderBoard,"dsfsdhghj");
             setLeaderBoard(res?.data?.leaderBoard)
           
             
@@ -108,7 +106,6 @@ const LeaderBoard=()=>{
 
     ];
 
-    console.log(leaderBoard);
     
     return(
         <div className="">
