@@ -5,7 +5,7 @@ const CustomButton = ({ value, onclick, className ,type,disable}) => {
     <div>
       <Button
          disabled={disable??false}
-        className={`    font-semibold  !rounded-full   !border-none  !bg-[#FDE900] hover:!text-[#000000] ${className}`}
+        className={`    font-semibold  !rounded-full   !border-none  !bg-[#6FCF97] hover:!text-[#000000] ${className}`}
         onClick={onclick}
         type={type}
       >

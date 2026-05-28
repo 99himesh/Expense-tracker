@@ -2,7 +2,7 @@ import Expense from "../components/expense/Expense"
 
 const ExpensePage=()=>{
     return(
-        <div className="bg-[#0F172A] ">
+        <div className="bg-[#000] ">
         <Expense/>
         
         </div>

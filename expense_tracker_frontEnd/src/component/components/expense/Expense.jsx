@@ -11,6 +11,7 @@ import {
     DeleteOutlined
 } from '@ant-design/icons';
 import LeaderBoard from "./LeaderBoard"
+import YourExpense from "./YourExpense"
 const Expense = () => {
     const token = Cookies.get("token");
     const [expenseInput, setExpenseInput] = useState({
@@ -18,7 +19,6 @@ const Expense = () => {
         description: "",
         category: ""
     });
-    const [expense, setExpense] = useState([])
 
     const expenseInputHandler = (e) => {
         const { name, value } = e.target;
@@ -31,7 +31,6 @@ const Expense = () => {
                     "Authorization": token
                 }
             })
-            setExpense(res.data.expenses);
 
 
         } catch (error) {
@@ -62,71 +61,13 @@ const Expense = () => {
 
         }
     }
-    const expenseDeleteHandler = async (item) => {
-        const data = { ...expenseInput }
-        try {
-            const res = await axios.delete(`http://localhost:3000/expense/deleteExpense/${item?.id}`, {
-                headers: {
-                    "Authorization": token
-                }
-            })
+    
 
-
-            if (res.status == 201) {
-                getExpense();
-            }
-        } catch (error) {
-            console.log(error);
-
-        }
-
-    }
-
-    useEffect(() => {
-        getExpense();
-    }, [])
+  
 
 
 
-    const expenseColumn = [
-        {
-            title: <CustomText value={"Id"} />,
-            dataIndex: 'expenseAmount',
-            key: 'expenseAmount',
-            width: 100,
-            render: (_, text, idx) => <Typography.Text>{idx + 1}</Typography.Text>
-        },
-        {
-            title: <CustomText value={"Expense Amount"} />,
-            dataIndex: 'expenseAmount',
-            key: 'expenseAmount',
-            render: (_, text) => <Typography.Text>Rs. {text.expenseAmount}</Typography.Text>
-        },
-        {
-            title: <CustomText value={"Category"} />,
-            dataIndex: 'category',
-            key: 'category',
-            render: (_, text) => <Typography.Text>{text.category}</Typography.Text>
-        },
-        {
-            title: <CustomText value={"Description"} />,
-            dataIndex: 'description',
-            key: 'description',
-            render: (_, text) => <Typography.Text>{text.description}</Typography.Text>
-        },
-        {
-            title: <CustomText value={"Action"} />,
-            dataIndex: 'description',
-            key: 'description',
-            align: "center",
-            render: (_, text) => {
-                return <div className="cursor-pointer" onClick={() => { expenseDeleteHandler(text) }} >
-                    <DeleteOutlined style={{ fontSize: "20px" }} />
-                </div>
-            }
-        },
-
-    ];
+   
     return (
         <div className="h-screen pt-10 ">
             {/* <div className="w-[50%]  m-auto flex justify-center items-center"> */}
@@ -166,9 +107,7 @@ const Expense = () => {
                         <LeaderBoard />
                     </Col>
                 </Row>
-                <div className="flex flex-col gap-3  mx-auto pt-5">
-                    <CustomTable scroll={{ y: 400 }} columns={expenseColumn} dataSource={expense} />
-                </div>
+                 <YourExpense/>
             </div>
         </div>
 
